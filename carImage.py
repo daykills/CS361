@@ -20,7 +20,6 @@ matplotlib.use("TkAgg")
 from matplotlib import pyplot as plt
 
 
-
 gui = tk.Tk()
 gui.title("Car Photoshop Showcase")  
 gui.geometry("900x500")
@@ -78,15 +77,19 @@ textEntryLabel.place(x = 450, y = 3)
 
 
 def callJson():
-  f = open('kevin/CS361-Project/car.json')
-  data = json.load(f)    
-  temp = data["img"]
-  url = temp
-  response = requests.get(url,stream=True)
-  img = Image.open(response.raw)
-  img.save("pic/origin.jpg")
-  f.close()
+  try:
+    f = open('kevin/CS361-Project/car.json')
+    data = json.load(f)    
+    temp = data["img"]
+    url = temp
+    response = requests.get(url,stream=True)
+    img = Image.open(response.raw)
+    img.save("pic/origin.jpg")
+    f.close()
+  except FileNotFoundError:
+      tk.messagebox.showinfo('user input is missing!')
 
+    
 #use teammate's output
 def displayfunction():
     #resize the original pic
@@ -99,6 +102,7 @@ def displayfunction():
     img= ImageTk.PhotoImage(Image.open("pic/display.jpg"))
     label_img = tk.Label(entryLeft, image = img)
     label_img.pack()
+    
 
 #create a display button for user to click
 displayButton = tk.Button(height = 1, width = 2, command = displayfunction, text = "display")
@@ -149,8 +153,6 @@ def CurSelet(self):
     outputFile.save("pic/{}.jpg".format(key))
 
 
-gui.title("Listbox")
-
 listbox = tk.Listbox(gui, background="Blue", fg="white",selectbackground="Red",highlightcolor="Red")
 listbox.bind('<<ListboxSelect>>',CurSelet)
 listbox.place(x=455, y=60,height = 140, width = 360)
@@ -174,6 +176,7 @@ def clear():
     entryRight.destroy()
     entryRight = tk.Entry(gui, width = 380,borderwidth = 3, background = "darkgrey")
     entryRight.place(x = 450, y = 250, width = 380, height = 200)
+    
 
 modifyButtonLabel = tk.Label(gui, text = "User Click to modify Orginal Image ", bg = "lightsteelblue", fg = "black", font = ("Monaco", 15)) 
 modifyButtonLabel.place(x = 480, y = 220)
@@ -182,8 +185,8 @@ modifyButtonLabel.place(x = 480, y = 220)
 modifyButton = tk.Button(height = 1, width = 2, command = modifyfunction, text = "modify")
 modifyButton.place(x = 550, y = 460, width = 60, height = 30)
 
-modifyButton = tk.Button(height = 1, width = 2, command = clear, text = "clear")
-modifyButton.place(x = 700, y = 460, width = 60, height = 30)
+clearButton = tk.Button(height = 1, width = 2, command = clear, text = "clear")
+clearButton.place(x = 670, y = 460, width = 60, height = 30)
 
 
 gui.mainloop()

@@ -27,8 +27,8 @@ gui.configure(background = 'lightsteelblue')
 ####### user input area#############
 userTextEntry = tk.Entry(gui, bg = 'white', font = ("Monaco", 15))
 userTextEntry.place(x = 13, y = 55, height = 70, width = 370)
-userTextLabel = tk.Label(gui, text = "User Input ", bg = "lightsteelblue", bd = 10, fg = "black", font = ("Monaco", 20)) 
-userTextLabel.place(x = 110, y = 3)
+userTextLabel = tk.Label(gui, text = "User Input from Scraper's UI ", bg = "lightsteelblue", bd = 10, fg = "black", font = ("Monaco", 20)) 
+userTextLabel.place(x = 20, y = 3)
 
 def sumbitBtn():
   # get scrapper's user input and disput

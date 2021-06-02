@@ -6,6 +6,7 @@ from tkinter import messagebox
 from tkinter import*
 
 import tkinter as tk
+from tkinter import *
 from tkinter import filedialog
 
 try:
@@ -25,25 +26,45 @@ gui.geometry("900x500")
 gui.configure(background = 'lightsteelblue') 
 
 ####### user input area#############
-userTextEntry = tk.Entry(gui, bg = 'white', font = ("Monaco", 15))
+userTextEntry = tk.Entry(gui, bg = 'white', font = ("Monaco", 10))
 userTextEntry.place(x = 13, y = 55, height = 70, width = 370)
 userTextLabel = tk.Label(gui, text = "User Input ", bg = "lightsteelblue", bd = 10, fg = "black", font = ("Monaco", 20)) 
 userTextLabel.place(x = 110, y = 3)
 
-def sumbitBtn():
-  # get scrapper's user input and disput
-  try:
-    f = open('kevin/CS361-Project/car.json')
-    data = json.load(f)    
-    carBrand = data["brand"]
-    print(carBrand)
-    userTextEntry.insert(END, carBrand)
-    f.close()
-  except FileNotFoundError:
-      tk.messagebox.showinfo('user input is missing!')
+#create a drop - down menu for user
+OPTIONS = ["",
+           "Telsa Model 3", 
+           "Tesla Model S", 
+           "Tesla Model X", 
+           "Tesla Model Y"]
+variable = tk.StringVar(gui)
+variable.set(OPTIONS[0]) # default value
+dropDownMenu = tk.OptionMenu(gui, variable, *OPTIONS)
+dropDownMenu.pack()
+dropDownMenu.place(x = 10, y = 150, width = 370)
 
-optionButton = tk.Button(gui, text="Sumbit", command=sumbitBtn)
-optionButton.place(x = 140, y = 160, width = 100)
+def ok():
+    #user input saved in json file
+    print ("value is:" + variable.get())
+    userInput = 0
+    if variable.get():
+        userInput = variable.get()
+    else:
+        userInput = userTextEntry.get()
+    data = {
+        "text": userInput,
+    }
+    with open('search.json', 'w') as f:
+        json.dump(data, f, indent=4)
+
+def helpme():
+    tk.messagebox.showinfo('information', 'Hi! You need to enter a valid car name like Tesla Model 3.')
+
+optionButton = tk.Button(gui, text="Sumbit", command=ok)
+optionButton.place(x = 10, y = 180, width = 170)
+
+optionButton = tk.Button(gui, text="Help", command=helpme)
+optionButton.place(x = 210, y = 180, width = 170)
 
 
 ###### #use teammate's output #############

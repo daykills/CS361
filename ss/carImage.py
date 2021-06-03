@@ -33,7 +33,7 @@ userTextLabel.place(x = 20, y = 3)
 def sumbitBtn():
   # get scrapper's user input and disput
   try:
-    f = open('kevin/CS361-Project/car.json')
+    f = open('../car.json')
     data = json.load(f)    
     carBrand = data["brand"]
     print(carBrand)
@@ -57,13 +57,13 @@ textEntryLabel.place(x = 450, y = 3)
 
 def callJson():
   try:
-    f = open('kevin/CS361-Project/car.json')
+    f = open('../car.json')
     data = json.load(f)    
     temp = data["img"]
     url = temp
     response = requests.get(url,stream=True)
     img = Image.open(response.raw)
-    img.save("pic/origin.jpg")
+    img.save("origin.jpg")
     f.close()
   except FileNotFoundError:
       tk.messagebox.showinfo('user input is missing!')
@@ -74,11 +74,11 @@ def displayfunction():
     #resize the original pic
     callJson()
     global img
-    temp = Image.open("pic/origin.jpg")
+    temp = Image.open("origin.jpg")
     outputFile = temp.resize((360,200),Image.ANTIALIAS)
-    outputFile.save("pic/display.jpg")
+    outputFile.save("display.jpg")
     #add resized pic to canvas
-    img= ImageTk.PhotoImage(Image.open("pic/display.jpg"))
+    img= ImageTk.PhotoImage(Image.open("display.jpg"))
     label_img = tk.Label(entryLeft, image = img)
     label_img.pack()
     
@@ -125,11 +125,11 @@ def CurSelet(self):
     key = str((listbox.get(ACTIVE)))
     print(key)
     print(playList_dict[key])
-    temp = Image.open("pic/display.jpg")
+    temp = Image.open("display.jpg")
     new_img = temp.filter(playList_dict[key])
     new_img.save("new_img.jpg")
     outputFile = new_img.resize((1000,600),Image.ANTIALIAS)
-    outputFile.save("pic/{}.jpg".format(key))
+    outputFile.save("{}.jpg".format(key))
 
 
 listbox = tk.Listbox(gui, background="Blue", fg="white",selectbackground="Red",highlightcolor="Red")
